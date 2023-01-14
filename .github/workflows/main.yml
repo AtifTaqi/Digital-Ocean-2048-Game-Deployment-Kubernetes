@@ -13,10 +13,12 @@ env:
   IMAGE: static-site
 
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+  build-and-push-to-gcr-workload-identity:
+    name: Build & push - with workload identity
     runs-on: ubuntu-latest
-    environment: production
+    permissions: # <- this section is needed for workload identity
+      contents: 'read'
+      id-token: 'write'
     
     steps:
     - name: Checkout
@@ -31,7 +33,7 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v0
       with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          workload_identity_provider: projects/126557959099/locations/global/workloadIdentityPools/atif-pool
           service_account: googel-container-registry@gcp-atif.iam.gserviceaccount.com
     - uses: RafikFarhad/push-to-gcr-github-action@v4.1
       with:
