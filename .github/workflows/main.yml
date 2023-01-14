@@ -17,26 +17,43 @@ jobs:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
     environment: production
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      
+    - name: Print image tag
+      run: echo $GITHUB_RUN_ID
 
 
     # Setup gcloud CLI
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v1'
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: google-github-actions/auth@v0
       with:
-        credentials_json: '${{ secrets.GCR_KEY }}'
+          workload_identity_provider: projects/126557959099/locations/global/workloadIdentityPools/atif-pool
+          service_account: googel-container-registry@gcp-atif.iam.gserviceaccount.com
+    - uses: RafikFarhad/push-to-gcr-github-action@v4.1
+      with:
+          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
+          registry: gcr.io
+          project_id: gcp-atif
+          image_name: game-2048
+          image_tag: $GITHUB_RUN_ID
+          dockerfile: ./Dockerfile
+          context: ./docker    
+    
+    
+ #   - id: 'auth'
+  #    uses: 'google-github-actions/auth@v1'
+   #   with:
+    #    credentials_json: '${{ secrets.GCR_KEY }}'
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v1'
 
     - name: 'Use gcloud CLI'
       run: 'gcloud info'
-
-    - name: Print image tag
-      run: echo $GITHUB_RUN_ID
 
     - name: Configure Docker
       run: gcloud auth configure-docker --quiet
@@ -65,10 +82,10 @@ jobs:
           username: _json_key
           password: ${{ secrets.GCR_KEY }}
      
-     # Push the Docker image to Google Container Registry 
+     # Push the Docker image to Google Container Registry      
+     
     - name: Build the hello-docker Docker image
       run: |
-       gcloud auth configure-docker
        docker build -t gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID .
        docker push gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
 
