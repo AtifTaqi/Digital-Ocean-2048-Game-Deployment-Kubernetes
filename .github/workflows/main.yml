@@ -68,6 +68,7 @@ jobs:
      # Push the Docker image to Google Container Registry 
     - name: Build the hello-docker Docker image
       run: |
+       gcloud auth configure-docker
        docker build -t gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID .
        docker push gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
 
