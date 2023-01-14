@@ -48,8 +48,8 @@ jobs:
            project_id: gcp-atif
            image_name: game-2048
            image_tag: $GITHUB_RUN_ID
-           dockerfile: ./Dockerfile
-           context: ./docker    
+           dockerfile: Dockerfile
+           context: Dockerfile   
     
     
  #   - id: 'auth'
