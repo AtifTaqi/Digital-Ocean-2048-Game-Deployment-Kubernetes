@@ -31,7 +31,7 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v0
       with:
-          workload_identity_provider: projects/126557959099/locations/global/workloadIdentityPools/atif-pool
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: googel-container-registry@gcp-atif.iam.gserviceaccount.com
     - uses: RafikFarhad/push-to-gcr-github-action@v4.1
       with:
