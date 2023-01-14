@@ -41,15 +41,15 @@ jobs:
       with:
           workload_identity_provider: projects/126557959099/locations/global/workloadIdentityPools/atif-pool
           service_account: googel-container-registry@gcp-atif.iam.gserviceaccount.com
-    - uses: RafikFarhad/push-to-gcr-github-action@v4.1
-      with:
-          # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
-          registry: gcr.io
-          project_id: gcp-atif
-          image_name: game-2048
-          image_tag: $GITHUB_RUN_ID
-          dockerfile: ./Dockerfile
-          context: ./docker    
+ #   - uses: RafikFarhad/push-to-gcr-github-action@v4.1
+  #    with:
+   #       # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
+    #      registry: gcr.io
+     #     project_id: gcp-atif
+      #    image_name: game-2048
+      #    image_tag: $GITHUB_RUN_ID
+       #   dockerfile: ./Dockerfile
+        #  context: ./docker    
     
     
  #   - id: 'auth'
