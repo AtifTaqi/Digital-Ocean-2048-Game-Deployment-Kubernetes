@@ -49,7 +49,7 @@ jobs:
            image_name: game-2048
            image_tag: $GITHUB_RUN_ID
            dockerfile: Dockerfile
-           context: AtifTaqi/2048-Game-GCP-Kubernetes/Dockerfile  
+           context: . .
     
     
  #   - id: 'auth'
