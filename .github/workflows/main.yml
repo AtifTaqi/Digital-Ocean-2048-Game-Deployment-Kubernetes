@@ -56,17 +56,19 @@ jobs:
       with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCR_KEY }}
+        project_id: ${{ env.PROJECT_ID }}
+        export_default_credentials: true
      
      # Push the Docker image to Google Container Registry 
     - name: Build the hello-docker Docker image
       run: |
        docker build -t gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID .
        docker push gcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
-       
-       #docker build . --tag ghcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
-       #docker run ghcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
-      # docker push ghcr.io/gcp-atif/game-2048:$GITHUB_RUN_ID
-        
+
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
