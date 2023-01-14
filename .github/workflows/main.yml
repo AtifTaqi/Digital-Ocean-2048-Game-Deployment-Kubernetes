@@ -29,11 +29,11 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_PRIVATE_KEY }}'
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v1'
+#    - name: 'Set up Cloud SDK'
+ #     uses: 'google-github-actions/setup-gcloud@v1'
 
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
+  #  - name: 'Use gcloud CLI'
+   #   run: 'gcloud info'
       
     - name: Print image tag
       run: echo $GITHUB_RUN_ID
