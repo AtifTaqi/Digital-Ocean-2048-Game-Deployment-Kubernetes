@@ -11,6 +11,6 @@ commonAnnotations:
 
 # 2048 game resources (namespace, services, deployments, etc)
 resources:
-  - resources/namespace.yaml
   - resources/deployment.yaml
+  - resources/namespace.yaml
   - resources/service.yaml
