@@ -19,7 +19,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}      
 
       - name: Build container image
-        run: docker build -t ${{ secrets.REGISTRY_NAME }}/game-2048:$(echo $GITHUB_SHA | head -c7) .
+        run: docker build -t ${{ secrets.REGISTRY_NAME }}/game-2048:latest .
+        #$(echo $GITHUB_SHA | head -c7)----> this was tag
           
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -30,7 +31,7 @@ jobs:
         run: doctl registry login --expiry-seconds 600
       
       - name: Push image to DigitalOcean Container Registry
-        run: docker push ${{ secrets.REGISTRY_NAME }}/game-2048:$(echo $GITHUB_SHA | head -c7)    
+        run: docker push ${{ secrets.REGISTRY_NAME }}/game-2048:latest   
  
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.CLUSTER_NAME }}
